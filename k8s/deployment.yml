@@ -32,7 +32,7 @@ spec:
       # This section describes the containers that make up the deployment
       containers:
         - name: flora
-          image: illfalcon/flora
+          image: gcr.io/flora-287616/flora
           ports:
             - containerPort: 8000
           # Set env variables used for Postgres Connection
