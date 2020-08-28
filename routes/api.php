@@ -23,3 +23,8 @@ Route::get('/flowers/{flower}', 'FlowersController@show');
 Route::post('/flowers', 'FlowersController@store');
 Route::put('/flowers/{flower}', 'FlowersController@update');
 Route::delete('/flowers/{flower}', 'FlowersController@destroy');
+Route::get('/cards/{user}', 'CardsController@index');
+Route::get('/cards/{card}', 'CardsController@show');
+Route::post('/cards', 'CardsController@store');
+Route::put('/cards/{card}', 'CardsController@update');
+Route::delete('/cards/{flower}', 'CardsController@destroy');
