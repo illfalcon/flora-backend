@@ -28,3 +28,5 @@ Route::get('/cards/{card}', 'CardsController@show');
 Route::post('/cards', 'CardsController@store');
 Route::put('/cards/{card}', 'CardsController@update');
 Route::delete('/cards/{flower}', 'CardsController@destroy');
+Route::post('/register', 'AuthController@register');
+Route::post('/login', 'AuthController@login');
