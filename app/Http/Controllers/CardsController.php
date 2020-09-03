@@ -94,6 +94,13 @@ class CardsController extends Controller
      */
     public function destroy(Card $card)
     {
-        //
+        if (Auth::user()->id != $card->author()->id) {
+            return response(['message' => 'Unauthorized access'], 401);
+        }
+        if ($card->delete())
+        {
+            return response(['success' => true], 200);
+        }
+        return response(['success' => false], 500);
     }
 }
