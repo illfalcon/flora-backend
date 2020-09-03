@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Card;
 use http\Client\Curl\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use function GuzzleHttp\Promise\all;
 
 class CardsController extends Controller
@@ -15,10 +17,10 @@ class CardsController extends Controller
      * @param $user_id
      * @return \Illuminate\Http\Response
      */
-    public function index($user_id)
+    public function index()
     {
-        $user = \App\User::find($user_id);
-        return ['cards' => $user->cards];
+        $user = Auth::user();
+        return response(['cards' => $user->cards], 200);
     }
 
     /**
@@ -29,13 +31,19 @@ class CardsController extends Controller
      */
     public function store(Request $request)
     {
-//        $data = json_decode($request, true);
-//        dd($request->all());
+        $validator = Validator::make($request->only(['flower_id', 'message', 'destination']),
+        [
+            'flower_id' => 'required|exists:flowers,id',
+            'message' => 'required',
+            'destination' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response(['message' => $validator->errors()->first()], 400);
+        }
         $card = new Card($request->all(['flower_id', 'message', 'destination']));
-//        dd($card);
-        $card->user_id = 1;
+        $card->user_id = Auth::user()->id;
         $card->save();
-        return 200;
+        return response(['card' => $card], 200);
     }
 
     /**
@@ -46,7 +54,10 @@ class CardsController extends Controller
      */
     public function show(Card $card)
     {
-        return ['card' => $card];
+        if (Auth::user()->id != $card->author()->id) {
+            return response(['message' => 'Unauthorized access'], 401);
+        }
+        return response(['card' => $card]);
     }
 
     /**
@@ -58,17 +69,21 @@ class CardsController extends Controller
      */
     public function update(Request $request, Card $card)
     {
-        $validatedProperties = $request->validate(
-            [
-                'user_id' => 'required|exists:users,id',
-                'message' => 'required',
-                'flower_id' => 'required|exists:users,id',
-                'destination' => 'required'
-            ]
-        );
-
-        $card->update($validatedProperties);
-        return 200;
+        $validator = Validator::make($request->only(['message', 'destination', 'flower_id']),
+        [
+            'message' => 'required',
+            'destination' => 'required',
+            'flower_id' => 'required|exists:flowers,id'
+        ]);
+        if ($validator->fails())
+        {
+            return response(['message' => $validator->errors()->first()], 400);
+        }
+        if (Auth::user()->id != $card->author()->id) {
+            return response(['message' => 'Unauthorized access'], 401);
+        }
+        $card->update($validator->validated());
+        return response(['card' => $card], 200);
     }
 
     /**

@@ -14,19 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:api')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::get('/flowers', 'FlowersController@index');
+    Route::get('/flowers/{flower}', 'FlowersController@show');
+    Route::post('/flowers', 'FlowersController@store');
+    Route::put('/flowers/{flower}', 'FlowersController@update');
+    Route::delete('/flowers/{flower}', 'FlowersController@destroy');
+    Route::get('/cards', 'CardsController@index');
+    Route::get('/cards/{card}', 'CardsController@show');
+    Route::post('/cards', 'CardsController@store');
+    Route::put('/cards/{card}', 'CardsController@update');
+    Route::delete('/cards/{card}', 'CardsController@destroy');
 });
 
-Route::get('/flowers', 'FlowersController@index');
-Route::get('/flowers/{flower}', 'FlowersController@show');
-Route::post('/flowers', 'FlowersController@store');
-Route::put('/flowers/{flower}', 'FlowersController@update');
-Route::delete('/flowers/{flower}', 'FlowersController@destroy');
-Route::get('/cards/{user}', 'CardsController@index');
-Route::get('/cards/{card}', 'CardsController@show');
-Route::post('/cards', 'CardsController@store');
-Route::put('/cards/{card}', 'CardsController@update');
-Route::delete('/cards/{flower}', 'CardsController@destroy');
 Route::post('/register', 'AuthController@register');
 Route::post('/login', 'AuthController@login');

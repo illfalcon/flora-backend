@@ -10,7 +10,7 @@ class Card extends Model
 
     public function author()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->first();
     }
 
     public function flower()
