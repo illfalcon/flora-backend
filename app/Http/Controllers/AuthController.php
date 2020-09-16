@@ -32,7 +32,7 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(['email', 'password']), [
+        $validator = Validator::make($request->all(['name', 'email', 'password']), [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required'

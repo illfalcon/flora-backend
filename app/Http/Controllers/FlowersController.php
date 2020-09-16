@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Flower;
+use App\Traits\UploadFileTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class FlowersController extends Controller
 {
+    use UploadFileTrait;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +18,7 @@ class FlowersController extends Controller
      */
     public function index()
     {
-        return Flower::all();
+        return response(['flowers' => Flower::all()]);
     }
 
     /**
@@ -35,13 +39,24 @@ class FlowersController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedAttributes = $request->validate(
-            [
-                'name' => 'required',
-                'info' => 'required'
-            ]
-        );
+        $request->validate([
+            'image' => 'required|file|image',
+            'name' => 'required',
+            'info' => 'required',
+        ]);
+        $image = $request->file('image');
+        $name = $request->get('name');
+        $folder = 'images';
+//        $filePath = $folder . $name. '.' . $image->getClientOriginalExtension();
+        $file = $this->uploadOne($image, $folder, 'public', $name);
+        $url = Storage::url($file);
+        $validatedAttributes = [
+            'name' => $request->get('name'),
+            'info' => $request->get('info'),
+            'image' => $url
+        ];
         Flower::create($validatedAttributes);
+        return response(['success' => true], 200);
     }
 
     /**

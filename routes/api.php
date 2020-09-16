@@ -19,8 +19,8 @@ Route::middleware('auth:api')->group(function () {
         return $request->user();
     });
     Route::get('/flowers', 'FlowersController@index');
-    Route::get('/flowers/{flower}', 'FlowersController@show');
     Route::post('/flowers', 'FlowersController@store');
+    Route::get('/flowers/{flower}', 'FlowersController@show');
     Route::put('/flowers/{flower}', 'FlowersController@update');
     Route::delete('/flowers/{flower}', 'FlowersController@destroy');
     Route::get('/cards', 'CardsController@index');

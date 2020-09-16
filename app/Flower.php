@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Flower extends Model
 {
-    protected $fillable = ['name', 'info'];
+    protected $fillable = ['name', 'info', 'image'];
 }

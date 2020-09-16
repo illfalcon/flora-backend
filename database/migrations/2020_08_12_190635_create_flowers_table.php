@@ -17,6 +17,7 @@ class CreateFlowersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('info');
+            $table->string('image');
             $table->timestamps();
         });
     }
