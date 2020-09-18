@@ -58,6 +58,10 @@ spec:
               value: "5432"
             - name: DB_CONNECTION
               value: "pgsql"
+            - name: GOOGLE_CLOUD_PROJECT_ID
+              value: "flora-287616"
+            - name: GOOGLE_CLOUD_STORAGE_BUCKET
+              value: "artifacts.flora-287616.appspot.com"
         # Change <INSTANCE_CONNECTION_NAME> here to include your GCP
         # project, the region of your Cloud SQL instance and the name
         # of your Cloud SQL instance. The format is $PROJECT:$REGION:$INSTANCE
