@@ -43,8 +43,11 @@ class AuthController extends Controller
         $data = $request->all(['name', 'email', 'password']);
         $data['password'] = bcrypt($data['password']);
         $user = User::create($data);
-
-        $token = $user->createToken('authUser')->accessToken;
+        try {
+            $token = $user->createToken('authUser')->accessToken;
+        } catch (\Exception $e) {
+            dd($e);
+        }
         return response(['user' => $user, 'token' => $token], 200);
     }
 }
