@@ -64,7 +64,7 @@ spec:
         - name: cloudsql-proxy
           image: gcr.io/cloudsql-docker/gce-proxy:1.11
           command: ["/cloud_sql_proxy",
-                    "-instances=flora-287616:europe-west3:flora-1=tcp:5432",
+                    "-instances=flora-287616:europe-north1:flora=tcp:5432",
                     "-credential_file=/secrets/cloudsql/credentials.json"]
           volumeMounts:
             - name: my-secrets-volume
