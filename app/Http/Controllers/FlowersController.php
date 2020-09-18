@@ -51,7 +51,7 @@ class FlowersController extends Controller
         $name = $request->get('name');
         $folder = 'images';
 //        $filePath = $folder . $name. '.' . $image->getClientOriginalExtension();
-        $file = $this->uploadOne($image, $folder, 'public', $name);
+        $file = $this->uploadOne($image, $folder, 'gcs', $name);
         $url = Storage::url($file);
         $validatedAttributes = [
             'name' => $request->get('name'),
