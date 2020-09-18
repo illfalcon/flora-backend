@@ -39,6 +39,9 @@ class FlowersController extends Controller
      */
     public function store(Request $request)
     {
+        if (auth()->user()->name != 'admin') {
+            return response(['error' => 'forbidden'], 403);
+        }
         $request->validate([
             'image' => 'required|file|image',
             'name' => 'required',
@@ -67,7 +70,7 @@ class FlowersController extends Controller
      */
     public function show(Flower $flower)
     {
-        return $flower;
+        return response(['flower' => $flower]);
     }
 
     /**
@@ -86,10 +89,13 @@ class FlowersController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param Flower $flower
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Flower $flower)
     {
+        if (auth()->user()->name != 'admin') {
+            return response(['error' => 'forbidden'], 403);
+        }
         $validatedAttributes = $request->validate(
             [
                 'name' => 'required',
@@ -97,6 +103,7 @@ class FlowersController extends Controller
             ]
         );
         $flower->update($validatedAttributes);
+        return response(['success' => true], 200);
     }
 
     /**

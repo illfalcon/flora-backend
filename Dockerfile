@@ -86,6 +86,8 @@ WORKDIR /var/www
 COPY . /var/www
 
 RUN composer install
+RUN php artisan migrate
+RUN php artisan passport:install
 
 CMD php artisan serve --host=0.0.0.0 --port=8000
 EXPOSE 8000
