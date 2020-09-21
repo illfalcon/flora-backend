@@ -18,7 +18,10 @@ class CreateFlowersTable extends Migration
             $table->string('name');
             $table->string('info');
             $table->string('image');
-            $table->timestamps();
+            $table->bigInteger('name_color');
+            $table->bigInteger('description_color');
+            $table->bigInteger('light_color');
+            $table->timestamps('main_color');
         });
     }
 

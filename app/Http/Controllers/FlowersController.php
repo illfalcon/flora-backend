@@ -46,6 +46,10 @@ class FlowersController extends Controller
             'image' => 'required|file|image',
             'name' => 'required',
             'info' => 'required',
+            'name_color' => 'required',
+            'description_color' => 'required',
+            'light_color' => 'required',
+            'main_color' => 'required'
         ]);
         $image = $request->file('image');
         $name = $request->get('name');
@@ -56,7 +60,11 @@ class FlowersController extends Controller
         $validatedAttributes = [
             'name' => $request->get('name'),
             'info' => $request->get('info'),
-            'image' => $url
+            'image' => $url,
+            'name_color' => $request->get('name_color'),
+            'description_color' => $request->get('description_color'),
+            'light_color' => $request->get('light_color'),
+            'main_color' => $request->get('main_color')
         ];
         Flower::create($validatedAttributes);
         return response(['success' => true], 200);
