@@ -21,7 +21,8 @@ class CreateFlowersTable extends Migration
             $table->bigInteger('name_color');
             $table->bigInteger('description_color');
             $table->bigInteger('light_color');
-            $table->timestamps('main_color');
+            $table->bigInteger('main_color');
+            $table->timestamps();
         });
     }
 
