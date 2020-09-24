@@ -43,7 +43,7 @@ class FlowersController extends Controller
             return response(['error' => 'forbidden'], 403);
         }
         $request->validate([
-            'image' => 'required|file|image',
+            'image' => 'required',
             'name' => 'required',
             'info' => 'required',
             'name_color' => 'required',
