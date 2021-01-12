@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  web:
+    build:
+      .
+    ports:
+      - 8000:8000
+    depends_on:
+      - database
+    networks:
+      - flora
+
+  database:
+    image: library/postgres:alpine
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
+    networks:
+      - flora
+
+volumes:
+  db-data:
+    external: true
+
+networks:
+  flora:
+    driver: bridge
